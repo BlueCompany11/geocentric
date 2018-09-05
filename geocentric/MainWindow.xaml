@@ -19,7 +19,9 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <ScrollViewer Margin="20" Grid.ColumnSpan="2">
-            <TextBlock Background="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}" Foreground="#FF13A68B"/>
+            <TextBlock Background="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}" Foreground="#FF13A68B"
+                       Text="{Binding TextInfo}"
+                       />
         </ScrollViewer>
         <Label Grid.Row="1" Grid.ColumnSpan="2" Margin="10" VerticalAlignment="Center">Czas który upłynął od rozpoczęcia testu PING.</Label>
         <ProgressBar Grid.Row="2" Grid.ColumnSpan="2" Margin="10"></ProgressBar>

@@ -23,6 +23,7 @@ namespace geocentric
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainWindowVM();
         }
     }
 }
