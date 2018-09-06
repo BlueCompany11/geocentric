@@ -86,11 +86,23 @@ namespace geocentric
             string blankBreak = "   ";
             Stopwatch s = new Stopwatch();
             s.Start();
-            await Task.Run(async () =>
+            var updateProgress = Task.Run(async () =>
             {
                 while (s.Elapsed < TimeSpan.FromSeconds(amountOfSecForPing))
                 {
                     Progress = s.Elapsed.TotalMilliseconds;
+                    await Task.Delay(TimeSpan.FromSeconds(0.1));
+                }
+            });
+            await Task.Run(async () =>
+            {
+                while (s.Elapsed < TimeSpan.FromSeconds(amountOfSecForPing))
+                {
+                    //Progress = s.Elapsed.TotalMilliseconds;
+                    /*
+                     * Wcześniej nie bylo updateProgress, bo wydawało mi się, że progressbar ma wskazywać rzeczywisty postęp
+                     * A teraz wydaje mi się, że powinien pokazywać tylko czas do zakończenia funkcji
+                     */
                     var ping = new Ping();
                     var result = ping.SendPingAsync(Destination);
                     if (await Task.WhenAny(result, Task.Delay(TimeSpan.FromSeconds(5))) == result)
@@ -102,8 +114,10 @@ namespace geocentric
                         TextInfo += "PING trwał dłużej niż 5 sek";
                     }
                 }
-                Progress = MaxProg;
+                
             });
+            await updateProgress;
+            Progress = MaxProg;
             s.Stop();
             SetStateAfterPing();
         }
