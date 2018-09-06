@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:geocentric"
         mc:Ignorable="d"
         Title="Ping test">
+    <Window.DataContext>
+        <local:MainWindowVM></local:MainWindowVM>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="7*"></RowDefinition>
@@ -24,9 +27,12 @@
                        />
         </ScrollViewer>
         <Label Grid.Row="1" Grid.ColumnSpan="2" Margin="10" VerticalAlignment="Center">Czas który upłynął od rozpoczęcia testu PING.</Label>
-        <ProgressBar Grid.Row="2" Grid.ColumnSpan="2" Margin="10"></ProgressBar>
+        <ProgressBar Grid.Row="2" Grid.ColumnSpan="2" Margin="10" 
+                     Value="{Binding Progress, Mode=OneWay}" Maximum="{Binding MaxProg}" Minimum="{Binding MinProg}"
+                     ></ProgressBar>
         <Label Grid.Row="3" Grid.ColumnSpan="2" Margin="10" VerticalAlignment="Center">Adres do testowania PING</Label>
-        <TextBox Grid.Row="4" Margin="10"></TextBox>
-        <Button Grid.Row="4" Grid.Column="1" Margin="10">Wysyłaj zapytania PING przez 7 sek.</Button>
+        <TextBox Grid.Row="4" Margin="10" Text="{Binding Destination, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsDestinationEnabled}">
+        </TextBox>
+        <Button Grid.Row="4" Grid.Column="1" Margin="10" Command="{Binding PingCommand}" Content="{Binding ButtonContent}"></Button>
     </Grid>
 </Window>
